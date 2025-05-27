@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع براعم لجوجو</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* تعريف الخط الأساسي للجسم والخلفية المتدرجة الدافئة والداكنة */
+        body {
+            font-family: 'Cairo', sans-serif;
+            /* لون خلفية ثابت، داكن، خافت، وحنون */
+            background: linear-gradient(135deg, #332e40, #221c27); /* بنفسجي داكن مائل للرمادي، لون حنون */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* تأكد من أن الجسم يملأ الشاشة بالكامل */
+            margin: 0;
+            overflow: hidden; /* إخفاء أشرطة التمرير الناتجة عن التحريكات */
+            /* تم إزالة خاصية transition للخلفية لأنها أصبحت ثابتة */
+        }
+        /* حاوية المحتوى الرئيسية بتصميم ناعم ومستدير وداكن */
+        .container {
+            background-color: rgba(0, 0, 0, 0.4); /* خلفية سوداء شبه شفافة لمظهر خافت أكثر */
+            border-radius: 2rem; /* زوايا مستديرة بشكل كبير */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* ظل أغمق وأكثر وضوحاً */
+            padding: 2.5rem;
+            text-align: center;
+            max-width: 90%; /* عرض أقصى للحاوية */
+            position: relative;
+            z-index: 10; /* تأكد من أن المحتوى فوق الدوائر المتحركة */
+            overflow: hidden; /* إخفاء أي جزء من الدوائر يخرج عن الحاوية */
+        }
+        /* تصميم نص "تم تصميمه بالكامل من أجل جوجو" بلون فاتح وتحريك عصري */
+        .text-jojo {
+            color: #f8bbd0; /* لون وردي فاتح جداً مستوحى من براعم */
+            font-size: 2.5rem; /* حجم خط كبير */
+            font-weight: 700; /* خط عريض */
+            margin-bottom: 1rem; /* تقليل المسافة ليتناسب النص الجديد */
+            line-height: 1.3;
+            /* إعادة حركة توهج ونبض النص السابقة */
+            animation: textGlowPulse 3s infinite alternate;
+            text-shadow: 0 0 5px rgba(248, 187, 208, 0.5); /* توهج ناعم */
+        }
+        /* أيقونة القلب مع تحريك نبض لطيف */
+        .heart-icon {
+            display: inline-block;
+            color: #f8bbd0; /* لون وردي فاتح للقلب */
+            margin-left: 0.5rem;
+            /* تحريك النبض للقلب يتم دمجه مع تحريك النص */
+        }
+
+        /* تصميم نص "نوم الهنا والعافية" */
+        .text-jojo-sub {
+            color: #e0f7fa; /* لون أزرق فاتح جداً وخافت */
+            font-size: 1.5rem; /* حجم خط أصغر قليلاً */
+            font-weight: 400; /* خط عادي */
+            margin-top: 0;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        /* أيقونة Zzz مع تحريك لطيف */
+        .zzz-icon {
+            display: inline-block;
+            color: #e0f7fa; /* نفس لون النص الفرعي */
+            margin-left: 0.5rem;
+            font-size: 1.8rem; /* حجم أكبر قليلاً */
+            animation: zzzFloat 2s infinite alternate ease-in-out; /* حركة طفو ناعمة */
+        }
+
+        /* دوائر خلفية متحركة للتفاعل البصري مع الموسيقى */
+        .circle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.1); /* لون أبيض شفاف أكثر خفوتاً */
+            border-radius: 50%; /* لجعلها دائرية بالكامل */
+            animation: pulse 6s infinite ease-in-out; /* تحريك نبض أبطأ للدوائر */
+            opacity: 0; /* تبدأ مخفية */
+            z-index: 0; /* تكون خلف المحتوى الرئيسي */
+            filter: blur(7px); /* تأثير ضبابي أكثر لمظهر أكثر نعومة وخفوت */
+        }
+        /* خصائص لكل دائرة لتحريك مختلف */
+        .circle:nth-child(1) {
+            width: 150px;
+            height: 150px;
+            top: 10%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+        .circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            bottom: 5%;
+            right: 10%;
+            animation-delay: 1s;
+        }
+        .circle:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            top: 50%;
+            left: 5%;
+            animation-delay: 2s;
+        }
+        .circle:nth-child(4) {
+            width: 180px;
+            height: 180px;
+            top: 20%;
+            right: 25%;
+            animation-delay: 3s;
+        }
+        /* يمكن إضافة المزيد من الدوائر لزيادة التأثير */
+        .circle:nth-child(5) {
+            width: 120px;
+            height: 120px;
+            bottom: 20%;
+            left: 30%;
+            animation-delay: 0.5s;
+            background-color: rgba(255, 204, 229, 0.1); /* وردي فاتح جداً وأخفت */
+        }
+        .circle:nth-child(6) {
+            width: 90px;
+            height: 90px;
+            top: 40%;
+            right: 5%;
+            animation-delay: 2.5s;
+            background-color: rgba(179, 229, 252, 0.1); /* أزرق فاتح جداً وأخفت */
+        }
+
+        /* تعريف تحريك النبض للدوائر */
+        @keyframes pulse {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1);
+                opacity: 0.15; /* أقصى شفافية للدوائر لتكون خافتة ولكن مرئية */
+            }
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* تعريف تحريك نبض القلب */
+        @keyframes beat {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        /* تحريك توهج ونبض النص (textGlowPulse) */
+        @keyframes textGlowPulse {
+            0% {
+                transform: scale(1);
+                text-shadow: 0 0 5px rgba(248, 187, 208, 0.5);
+            }
+            50% {
+                transform: scale(1.02); /* تكبير خفيف جداً */
+                text-shadow: 0 0 15px rgba(248, 187, 208, 0.8), 0 0 25px rgba(248, 187, 208, 0.3); /* توهج أقوى */
+            }
+            100% {
+                transform: scale(1);
+                text-shadow: 0 0 5px rgba(248, 187, 208, 0.5);
+            }
+        }
+
+        /* تحريك طفو Zzz */
+        @keyframes zzzFloat {
+            0% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(-8px); opacity: 0.7; } /* حركة طفو أعلى قليلاً وأكثر خفوتاً */
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* تصميم زر التشغيل بلون داكن يتناسب مع الثيم */
+        .play-button {
+            background-color: #7e57c2; /* لون بنفسجي داكن لطيف */
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 9999px; /* زر دائري */
+            font-size: 1.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+            border: none; /* إزالة الحدود الافتراضية للزر */
+        }
+        .play-button:hover {
+            background-color: #673ab7; /* لون أغمق عند التمرير */
+            transform: translateY(-2px); /* تأثير رفع بسيط */
+        }
+        .play-button:active {
+            transform: translateY(0); /* تأثير ضغط بسيط */
+        }
+        .play-icon {
+            margin-left: 0.75rem; /* مسافة بين النص والأيقونة */
+            font-size: 1.8rem; /* حجم أيقونة التشغيل */
+        }
+
+        /* تعديلات التصميم المتجاوب للشاشات الأصغر */
+        @media (max-width: 768px) {
+            .text-jojo {
+                font-size: 1.8rem;
+            }
+            .text-jojo-sub {
+                font-size: 1.2rem;
+            }
+            .zzz-icon {
+                font-size: 1.5rem;
+            }
+            .container {
+                padding: 1.5rem;
+            }
+            .play-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 1.2rem;
+            }
+            .play-icon {
+                font-size: 1.5rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .text-jojo {
+                font-size: 1.5rem;
+            }
+            .text-jojo-sub {
+                font-size: 1rem;
+            }
+            .zzz-icon {
+                font-size: 1.2rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+            .circle {
+                display: none; /* إخفاء الدوائر على الشاشات الصغيرة جداً لتجنب الازدحام */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+
+        <h1 class="text-jojo">
+            تم تصميمه بالكامل من أجل جوجو <span class="heart-icon">❤️</span>
+        </h1>
+        <p class="text-jojo-sub">
+            نوم الهنا والعافية <span class="zzz-icon">Zzz</span>
+        </p>
+
+        <div id="audioPrompt" class="flex flex-col items-center justify-center">
+            <p class="text-gray-300 text-lg mb-4">الرجاء النقر لتشغيل أغنية براعم!</p>
+            <button id="playButton" class="play-button">
+                تشغيل الأغنية
+                <svg class="play-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
+                </svg>
+            </button>
+            <p id="errorMessage" class="text-red-400 text-sm mt-2 hidden">
+                عذراً، فشل تشغيل الأغنية. يرجى التأكد من أن رابط الأغنية صحيح ومباشر (ينتهي بـ .mp3).
+            </p>
+        </div>
+
+        <audio id="baraemAudio" loop>
+            <source src="https://archive.org/download/baraem-song/baraem-song.mp3" type="audio/mpeg">
+            متصفحك لا يدعم تشغيل الصوت.
+        </audio>
+    </div>
+
+    <script>
+        // الحصول على عناصر الصوت والزر وحاوية الرسالة
+        const audio = document.getElementById('baraemAudio');
+        const playButton = document.getElementById('playButton');
+        const audioPrompt = document.getElementById('audioPrompt');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // إضافة مستمع حدث للنقر على الزر
+        playButton.addEventListener('click', () => {
+            audio.play()
+                .then(() => {
+                    // إخفاء رسالة التوجيه والزر ورسالة الخطأ بمجرد بدء التشغيل
+                    audioPrompt.style.display = 'none';
+                    errorMessage.classList.add('hidden');
+                    console.log('تم تشغيل الصوت بنجاح.');
+                })
+                .catch(error => {
+                    console.error('فشل تشغيل الصوت:', error);
+                    // عرض رسالة الخطأ للمستخدم إذا فشل التشغيل
+                    errorMessage.classList.remove('hidden');
+                });
+        });
+
+        // تم إزالة وظيفة تغيير الخلفية لأن اللون أصبح ثابتاً
+        window.onload = function() {
+            console.log('الصفحة جاهزة. الرجاء النقر على زر التشغيل.');
+        };
+    </script>
+</body>
+</html>
